@@ -20,11 +20,13 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       # Runs a set of commands using the runners shell
       - name: Run a multi-line script
         run: |
-          $PSVersionTable
-          Invoke-WebRequest -Uri 'https://github.com/tgstation/tgstation-server/releases/download/tgstation-server-v4.8.1/ServerUpdatePackage.zip' -OutFile ServerUpdatePackage.zip
+          $PSVersionTable          
+          Invoke-WebRequest -Headers @{ Authorization = "Token $env:GITHUB_TOKEN" } -Uri 'https://github.com/tgstation/tgstation-server/releases/download/tgstation-server-v4.8.1/ServerUpdatePackage.zip' -OutFile ServerUpdatePackage.zip
           Get-Item 'ServerUpdatePackage.zip'
         shell: pwsh

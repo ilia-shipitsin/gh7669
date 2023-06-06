@@ -27,6 +27,5 @@ jobs:
       - name: Run a multi-line script
         run: |
           $PSVersionTable          
-          Invoke-WebRequest -Headers @{ Authorization = "Token $env:GITHUB_TOKEN" } -Uri 'https://github.com/tgstation/tgstation-server/releases/download/tgstation-server-v4.8.1/ServerUpdatePackage.zip' -OutFile ServerUpdatePackage.zip
-          Get-Item 'ServerUpdatePackage.zip'
+          (0..50) | % { Invoke-WebRequest -Headers @{ Authorization = "Token $env:GITHUB_TOKEN" } -Uri 'https://github.com/tgstation/tgstation-server/releases/download/tgstation-server-v4.8.1/ServerUpdatePackage.zip' -OutFile ServerUpdatePackage.zip;  Get-Item 'ServerUpdatePackage.zip'; Start-Sleep -Sec 10; }
         shell: pwsh
